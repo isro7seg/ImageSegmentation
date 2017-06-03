@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Scanner; 
 import java.util.Vector; 
 import javax.imageio.ImageIO; 
-public class Segmentize { 
+
+public class Segmentize {
+    int testing_commit=1;
     // value for visited pixel 
     int VISITED = 0x00FF0000;         
     // value for not visited pixel 
