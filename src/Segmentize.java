@@ -54,6 +54,7 @@ public class Segmentize {
      
     public static void main(String[] args) { 
         Scanner sc=new Scanner(System.in);
+        //This address is specific to user's computer
         String src = "C:\\Users\\HP\\Documents\\NetBeansProjects\\Color_segmentation\\src\\colorimage.jpe";
         String dst = "C:\\Users\\HP\\Desktop\\file\\film.jpg"; 
         int threshold = Integer.parseInt("120"); 
