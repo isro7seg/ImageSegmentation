@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage; 
 import java.io.File; 
 import java.util.Arrays; 
+import java.util.Scanner; 
 import java.util.Vector; 
 import javax.imageio.ImageIO; 
 public class Segmentize { 
@@ -50,17 +51,10 @@ public class Segmentize {
     } 
      
     public static void main(String[] args) { 
-        if (args.length!=3) { 
-            System.out.println("Usage: java Segmentize" 
-                                + " [source image filename]" 
-                                + " [destination image filename]" 
-                                + " [threshold 0-255]"); 
-            return; 
-        } 
-        // parse arguments 
-        String src = args[0]; 
-        String dst = args[1]; 
-        int threshold = Integer.parseInt(args[2]); 
+        Scanner sc=new Scanner(System.in);
+        String src = "C:\\Users\\HP\\Documents\\NetBeansProjects\\Color_segmentation\\src\\colorimage.jpe";
+        String dst = "C:\\Users\\HP\\Desktop\\file\\film.jpg"; 
+        int threshold = Integer.parseInt("120"); 
          
         // create new Segmentize object 
         Segmentize s = new Segmentize(loadImage(src),threshold); 
