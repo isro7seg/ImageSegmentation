@@ -138,8 +138,7 @@ switch(i)
         image=fh.ReadImage();
        
       Rectangle rect = mainsrc.getBounds();
-      Image scimage = image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
-      
+      Image scimage = image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);   
       
         ImageIcon icon = new ImageIcon(scimage); 
         
