@@ -14,8 +14,7 @@ import java.util.Vector;
  * @author HP
  */
 public class ColorSegmentation {
-       
-    
+         
     // value for visited pixel 
     int VISITED = 0x00FF0000;         
     // value for not visited pixel 
