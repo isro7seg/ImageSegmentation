@@ -45,7 +45,9 @@ public class sobelDemo extends JApplet {
 	 
 	 
 	   	// Applet init function	
-	public void init() {
+        
+   
+   	public void init() {
 		
 		tracker = new MediaTracker(this);
 		for(int i = 0; i < fileNames.length; i++) {
