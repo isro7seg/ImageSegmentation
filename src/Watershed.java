@@ -26,7 +26,7 @@ public class Watershed {
     int g_h; 
      
     public static void main(String[] args) { 
-        if (args.length!=5) { 
+        /*if (args.length!=5) { 
             System.out.println("Usage: java popscan.Watershed" 
                             + " [source image filename]" 
                             + " [destination image filename]" 
@@ -35,12 +35,12 @@ public class Watershed {
                             + " [connected pixels (4 or 8)]" 
                             ); 
             return; 
-        } 
-        String src = args[0]; 
-        String dst = args[1]; 
-        int floodPoints = Integer.parseInt(args[2]); 
-        int windowWidth = Integer.parseInt(args[3]); 
-        int connectedPixels = Integer.parseInt(args[4]); 
+        } */
+        String src = "C:\\Users\\ssd\\Documents\\NetBeansProjects\\ImageSegmentation\\src\\film.png"; 
+        String dst = "C:\\Users\\ssd\\Documents\\NetBeansProjects\\ImageSegmentation\\src\\colorimage12.png"; 
+        int floodPoints = 100; 
+        int windowWidth = 30; 
+        int connectedPixels =8; 
          
         Watershed watershed = new Watershed(); 
          
