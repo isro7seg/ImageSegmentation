@@ -69,17 +69,14 @@ public class Segmentize {
      
     public Segmentize(BufferedImage _srcImage, int threshold) { 
         _threshold = threshold; 
-        _width       = _srcImage.getWidth(); 
-        _height       = _srcImage.getHeight(); 
+        _width = _srcImage.getWidth(); 
+        _height = _srcImage.getHeight(); 
         // extract pixels from source image 
-        _pixels       = _srcImage.getRGB(0, 0, _width, _height, 
-                                        null, 0, _width); 
+        _pixels = _srcImage.getRGB(0, 0, _width, _height,null, 0, _width); 
         // create empty destination image 
-        _dstImage  = new BufferedImage(_width,  
-                                        _height,  
-                                        BufferedImage.TYPE_INT_RGB); 
-        _visited   = new int[_pixels.length]; 
-        _points       = new Vector<SPoint>(); 
+        _dstImage= new BufferedImage(_width, _height,BufferedImage.TYPE_INT_RGB); 
+        _visited = new int[_pixels.length]; 
+        _points  = new Vector<SPoint>(); 
     } 
      
     private BufferedImage segmentize() { 
@@ -131,9 +128,7 @@ public class Segmentize {
                     int gx = Math.abs(green - _green); 
                     int bx = Math.abs(blue - _blue); 
                     // if all colors are under threshold 
-                    if (rx<=_threshold 
-                            &&gx<=_threshold 
-                                &&bx<=_threshold) { 
+                    if (rx<=_threshold &&gx<=_threshold  &&bx<=_threshold) { 
                         // add the candidate to the segment (image) 
                         _pixels[_width*y+x] = _color; 
                         // mark the candidate as visited 
