@@ -60,8 +60,8 @@ public class ColorSegmentation {
         } 
     } 
     
-    public ColorSegmentation(BufferedImage _srcImage, int threshold) { 
-        _threshold = threshold; 
+    public ColorSegmentation(BufferedImage _srcImage) { 
+         
         _width       = _srcImage.getWidth(); 
         _height       = _srcImage.getHeight(); 
         // extract pixels from source image 
@@ -75,7 +75,8 @@ public class ColorSegmentation {
         _points       = new Vector<ColorSegmentation.SPoint>(); 
     } 
      
-    private BufferedImage segmentize() { 
+    public BufferedImage segmentize(int threshold) { 
+        _threshold = threshold;
         // initialize points 
         _points.clear(); 
         // clear table with NOT_VISITED value 

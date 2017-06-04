@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import javax.swing.ImageIcon;
+import javax.swing.JSlider;
 
 
 /**
@@ -13,13 +14,14 @@ import javax.swing.ImageIcon;
  */
 
 public class colorSegFrame extends javax.swing.JFrame {
-
+     int threshold;
+     ColorSegmentation cseg;
     /**
      * Creates new form colorSegFrame
      */
     public colorSegFrame() {
                 initComponents();
-
+                 cseg=new ColorSegmentation(MainSegFrame.image);
        // this.image=image;
         
              Rectangle rect = colorsource.getBounds();
@@ -74,13 +76,13 @@ public class colorSegFrame extends javax.swing.JFrame {
         jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jRadioButton1.setText("Enable");
         getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(60, 380, 71, 27);
+        jRadioButton1.setBounds(60, 380, 67, 27);
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jRadioButton2.setText("Disable");
         getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(60, 410, 73, 27);
+        jRadioButton2.setBounds(60, 410, 71, 27);
 
         colorslider.setMajorTickSpacing(40);
         colorslider.setMaximum(255);
@@ -88,16 +90,21 @@ public class colorSegFrame extends javax.swing.JFrame {
         colorslider.setPaintLabels(true);
         colorslider.setPaintTicks(true);
         colorslider.setSnapToTicks(true);
+        colorslider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                colorsliderStateChanged(evt);
+            }
+        });
         getContentPane().add(colorslider);
         colorslider.setBounds(220, 400, 450, 50);
 
         bcolorsave.setText("Save");
         getContentPane().add(bcolorsave);
-        bcolorsave.setBounds(710, 400, 61, 25);
+        bcolorsave.setBounds(710, 400, 57, 23);
 
         jLabel2.setText("Threshold");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(361, 360, 100, 16);
+        jLabel2.setBounds(361, 360, 100, 14);
 
         Tfthresh.setEditable(false);
         getContentPane().add(Tfthresh);
@@ -114,6 +121,22 @@ public class colorSegFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void colorsliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_colorsliderStateChanged
+        // TODO add your handling code here:
+               JSlider source = (JSlider)evt.getSource();
+	        if (!source.getValueIsAdjusting()) {
+				System.out.println("threshold="+source.getValue());
+				threshold=source.getValue();
+				Tfthresh.setText(""+source.getValue());
+                               BufferedImage outimg= cseg.segmentize(threshold);
+                               Rectangle rect = colordest.getBounds();
+                               Image scimage = outimg.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
+                              ImageIcon icon = new ImageIcon(scimage); 
+                              colordest.setIcon(icon);
+                                
+                }
+    }//GEN-LAST:event_colorsliderStateChanged
 
     /**
      * @param args the command line arguments
