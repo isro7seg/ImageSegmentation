@@ -52,7 +52,7 @@ public class FileHandling {
             file=chooser.getSelectedFile();
             try { 
              
-            ImageIO.write(image, "png", file); 
+            ImageIO.write(image, "jpg", file); 
         } catch (Exception e) { 
             System.out.println(e.toString()+" Image '"+file.getName()
                                 +"' saving failed."); 

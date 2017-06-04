@@ -147,36 +147,5 @@ public class ColorSegmentation {
             } 
         } 
     } 
-    private BufferedImage colorSegment() { 
-        // initialize points 
-        _points.clear(); 
-        // clear table with NOT_VISITED value 
-        Arrays.fill(_visited, NOT_VISITED); 
-        // loop through all pixels 
-        for (int x=0;x<_width;x++) { 
-            for (int y=0;y<_height;y++) { 
-                // if not visited, start new segment 
-                if (_visited[_width*y+x]==NOT_VISITED) { 
-                    // extract segment color info from pixel 
-                    _color = _pixels[_width*y+x]; 
-                    _red   = _color>>16&0xff; 
-                    _green = _color>>8&0xff; 
-                    _blue  = _color&0xff; 
-                    // add "seed" 
-                    _points.add(new ColorSegmentation.SPoint(x, y)); 
-                    // start finding neighboring pixels 
-                    flood(); 
-                } 
-            } 
-        } 
-        // save the result image 
-        _dstImage.setRGB(0, 0, _width, _height, _pixels, 0, _width); 
-        return _dstImage; 
-    } 
-     
-        
-    
-    
-    
     
 }

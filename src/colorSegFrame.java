@@ -23,6 +23,9 @@ public class colorSegFrame extends javax.swing.JFrame {
     public colorSegFrame() {
                 initComponents();
                  cseg=new ColorSegmentation(MainSegFrame.image);
+                 cseg.segmentize(10);
+                 colorslider.setEnabled(false);
+                 jRadioButton2.setSelected(true);
        // this.image=image;
         
              Rectangle rect = colorsource.getBounds();
@@ -66,6 +69,7 @@ public class colorSegFrame extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -76,28 +80,39 @@ public class colorSegFrame extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jRadioButton1.setText("Enable");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jRadioButton1);
         jRadioButton1.setBounds(60, 380, 67, 27);
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jRadioButton2.setText("Disable");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jRadioButton2);
         jRadioButton2.setBounds(60, 410, 71, 27);
 
-        colorslider.setMajorTickSpacing(40);
+        colorslider.setMajorTickSpacing(20);
         colorslider.setMaximum(255);
         colorslider.setMinorTickSpacing(10);
         colorslider.setPaintLabels(true);
         colorslider.setPaintTicks(true);
         colorslider.setSnapToTicks(true);
+        colorslider.setValue(10);
         colorslider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 colorsliderStateChanged(evt);
             }
         });
         getContentPane().add(colorslider);
-        colorslider.setBounds(220, 400, 450, 50);
+        colorslider.setBounds(170, 400, 450, 50);
 
         bcolorsave.setText("Save");
         bcolorsave.addActionListener(new java.awt.event.ActionListener() {
@@ -106,7 +121,7 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(bcolorsave);
-        bcolorsave.setBounds(710, 400, 57, 23);
+        bcolorsave.setBounds(640, 360, 57, 23);
 
         jLabel2.setText("Threshold");
         getContentPane().add(jLabel2);
@@ -130,6 +145,8 @@ public class colorSegFrame extends javax.swing.JFrame {
 
     private void colorsliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_colorsliderStateChanged
         // TODO add your handling code here:
+       
+        
                JSlider source = (JSlider)evt.getSource();
 	        if (!source.getValueIsAdjusting()) {
 				System.out.println("threshold="+source.getValue());
@@ -142,14 +159,30 @@ public class colorSegFrame extends javax.swing.JFrame {
                               ImageIcon icon = new ImageIcon(scimage); 
                               colordest.setIcon(icon);
                                 
-                }
+                } 
+        
+        
     }//GEN-LAST:event_colorsliderStateChanged
 
     private void bcolorsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcolorsaveActionPerformed
         // TODO add your handling code here:
         FileHandling fh=new FileHandling(this);
+        if(jRadioButton2.isSelected()==true){
+            BufferedImage outimg= cseg.segmentize(10);
+            outputImage=outimg;
+        }
         fh.WriteImage(outputImage);
     }//GEN-LAST:event_bcolorsaveActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        colorslider.setEnabled(true);
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+        colorslider.setEnabled(false);
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     /**
      * @param args the command line arguments
