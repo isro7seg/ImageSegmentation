@@ -16,6 +16,7 @@ import javax.swing.JSlider;
 public class colorSegFrame extends javax.swing.JFrame {
      int threshold;
      ColorSegmentation cseg;
+     BufferedImage outputImage;
     /**
      * Creates new form colorSegFrame
      */
@@ -99,6 +100,11 @@ public class colorSegFrame extends javax.swing.JFrame {
         colorslider.setBounds(220, 400, 450, 50);
 
         bcolorsave.setText("Save");
+        bcolorsave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bcolorsaveActionPerformed(evt);
+            }
+        });
         getContentPane().add(bcolorsave);
         bcolorsave.setBounds(710, 400, 57, 23);
 
@@ -130,6 +136,7 @@ public class colorSegFrame extends javax.swing.JFrame {
 				threshold=source.getValue();
 				Tfthresh.setText(""+source.getValue());
                                BufferedImage outimg= cseg.segmentize(threshold);
+                               outputImage=outimg;
                                Rectangle rect = colordest.getBounds();
                                Image scimage = outimg.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
                               ImageIcon icon = new ImageIcon(scimage); 
@@ -137,6 +144,12 @@ public class colorSegFrame extends javax.swing.JFrame {
                                 
                 }
     }//GEN-LAST:event_colorsliderStateChanged
+
+    private void bcolorsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcolorsaveActionPerformed
+        // TODO add your handling code here:
+        FileHandling fh=new FileHandling(this);
+        fh.WriteImage(outputImage);
+    }//GEN-LAST:event_bcolorsaveActionPerformed
 
     /**
      * @param args the command line arguments

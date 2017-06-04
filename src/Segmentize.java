@@ -55,8 +55,8 @@ public class Segmentize {
     public static void main(String[] args) { 
         Scanner sc=new Scanner(System.in);
         //This address is specific to user's computer
-        String src = "C:\\Users\\Shivam\\Documents\\NetBeansProjects\\Segmentation\\src\\colorimage.jpe";
-        String dst = "C:\\Users\\Shivam\\Desktop\\film.jpg"; 
+        String src = "C:\\Users\\ssd\\Documents\\NetBeansProjects\\Segmentation\\src\\colorimage.jpe";
+        String dst = "C:\\Users\\ssd\\Desktop\\film.jpg"; 
         int threshold = Integer.parseInt("120"); 
          
         // create new Segmentize object 
