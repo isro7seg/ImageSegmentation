@@ -8,10 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JSlider;
 
 
-/**
- *
- * @author HP
- */
+
 
 public class colorSegFrame extends javax.swing.JFrame {
      int threshold;
