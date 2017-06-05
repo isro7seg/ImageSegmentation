@@ -20,7 +20,16 @@ public class colorSegFrame extends javax.swing.JFrame {
     public colorSegFrame() {
                 initComponents();
                  cseg=new ColorSegmentation(MainSegFrame.image);
-                 cseg.segmentize(10);
+                 /**********This code is for showing image at disabling of radio button
+                  It will show the image at threshold 30 ie. default**********/
+                 BufferedImage outimg=cseg.segmentize(30);
+                 outputImage=outimg;
+                    Rectangle rectout = colordest.getBounds();
+                   Image scimageout = outimg.getScaledInstance(rectout.width,rectout.height,Image.SCALE_DEFAULT);
+                   ImageIcon iconout = new ImageIcon(scimageout); 
+                    colordest.setIcon(iconout);
+                    /*****************/
+                              
                  colorslider.setEnabled(false);
                  jRadioButton2.setSelected(true);
        // this.image=image;
@@ -83,7 +92,7 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(60, 380, 67, 27);
+        jRadioButton1.setBounds(60, 380, 71, 27);
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -94,9 +103,9 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(60, 410, 71, 27);
+        jRadioButton2.setBounds(60, 410, 73, 27);
 
-        colorslider.setMajorTickSpacing(20);
+        colorslider.setMajorTickSpacing(10);
         colorslider.setMaximum(255);
         colorslider.setMinorTickSpacing(10);
         colorslider.setPaintLabels(true);
@@ -118,11 +127,11 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(bcolorsave);
-        bcolorsave.setBounds(640, 360, 57, 23);
+        bcolorsave.setBounds(640, 360, 61, 25);
 
         jLabel2.setText("Threshold");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(361, 360, 100, 14);
+        jLabel2.setBounds(361, 360, 100, 16);
 
         Tfthresh.setEditable(false);
         getContentPane().add(Tfthresh);
@@ -165,7 +174,7 @@ public class colorSegFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         FileHandling fh=new FileHandling(this);
         if(jRadioButton2.isSelected()==true){
-            BufferedImage outimg= cseg.segmentize(10);
+            BufferedImage outimg= cseg.segmentize(30);
             outputImage=outimg;
         }
         fh.WriteImage(outputImage);

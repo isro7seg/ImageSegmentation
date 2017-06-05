@@ -101,7 +101,7 @@
     <Component class="javax.swing.JSlider" name="colorslider">
       <Properties>
         <Property name="majorTickSpacing" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="20" type="code"/>
+          <Connection code="10" type="code"/>
         </Property>
         <Property name="maximum" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="255" type="code"/>
