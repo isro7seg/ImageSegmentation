@@ -105,9 +105,9 @@ public class colorSegFrame extends javax.swing.JFrame {
         getContentPane().add(jRadioButton2);
         jRadioButton2.setBounds(60, 410, 73, 27);
 
-        colorslider.setMajorTickSpacing(10);
+        colorslider.setMajorTickSpacing(30);
         colorslider.setMaximum(255);
-        colorslider.setMinorTickSpacing(10);
+        colorslider.setMinorTickSpacing(5);
         colorslider.setPaintLabels(true);
         colorslider.setPaintTicks(true);
         colorslider.setSnapToTicks(true);
@@ -118,7 +118,7 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(colorslider);
-        colorslider.setBounds(170, 400, 450, 50);
+        colorslider.setBounds(170, 400, 510, 50);
 
         bcolorsave.setText("Save");
         bcolorsave.addActionListener(new java.awt.event.ActionListener() {
