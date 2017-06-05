@@ -92,7 +92,7 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(60, 380, 71, 27);
+        jRadioButton1.setBounds(60, 380, 67, 27);
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -103,7 +103,7 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(60, 410, 73, 27);
+        jRadioButton2.setBounds(60, 410, 71, 27);
 
         colorslider.setMajorTickSpacing(30);
         colorslider.setMaximum(255);
@@ -127,11 +127,11 @@ public class colorSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(bcolorsave);
-        bcolorsave.setBounds(640, 360, 61, 25);
+        bcolorsave.setBounds(640, 360, 57, 23);
 
         jLabel2.setText("Threshold");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(361, 360, 100, 16);
+        jLabel2.setBounds(361, 360, 100, 14);
 
         Tfthresh.setEditable(false);
         getContentPane().add(Tfthresh);
@@ -158,6 +158,7 @@ public class colorSegFrame extends javax.swing.JFrame {
 				System.out.println("threshold="+source.getValue());
 				threshold=source.getValue();
 				Tfthresh.setText(""+source.getValue());
+                                cseg=new ColorSegmentation(MainSegFrame.image);
                                BufferedImage outimg= cseg.segmentize(threshold);
                                outputImage=outimg;
                                Rectangle rect = colordest.getBounds();
