@@ -214,6 +214,7 @@ public class sobelDemo extends JApplet {
 
 		new Thread(){
 			public void run(){
+                           
 				edgedetector.init(orig,width,height);
 				int[] res = edgedetector.process();
 				if(thresholdActive==true)
