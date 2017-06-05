@@ -120,10 +120,9 @@ switch(i)
     }
     case 1:
     {
-        sobelDemo sb = new sobelDemo();
-      //  sb.setVisible(true);
-        
-        break;
+         edgeSegFrame esf=new edgeSegFrame();
+         esf.setVisible(true);
+         break;        
     }
     case 2:
     {

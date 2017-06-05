@@ -1,3 +1,20 @@
+
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.MemoryImageSource;
+import java.awt.image.PixelGrabber;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JSlider;
+import javax.swing.SwingUtilities;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,13 +26,77 @@
  * @author HP
  */
 public class edgeSegFrame extends javax.swing.JFrame {
+     EdgeSegmentation eseg;
+      Image outputImage;
+	MediaTracker tracker = null;
+	PixelGrabber grabber = null;
+	int width = 0, height = 0;
+        
 
+	//slider constraints
+	int threshold=60;
+	boolean thresholdActive=false;
+
+	int imageNumber=0;
+	public int orig[] = null;
+	
+	
+	
+	
+	
+	
     /**
      * Creates new form edgeSegFrame
      */
     public edgeSegFrame() {
         initComponents();
+         Rectangle rect = edgesrc.getBounds(null);
+         width=MainSegFrame.image.getWidth();
+         height=MainSegFrame.image.getHeight();
+         
+         Image scimage = MainSegFrame.image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
+         edgesrc.setIcon(new ImageIcon(scimage));
+        jradiobutton2.setSelected(true);
+        thresholdActive=false;
+        edgeslider.setEnabled(false);
+        
+        eseg=new EdgeSegmentation();
+        processImage();              
+               
     }
+private void processImage(){
+		orig=new int[width*height];
+		PixelGrabber grabber = new PixelGrabber(MainSegFrame.image, 0, 0, width, height, orig, 0, width);
+		try {
+			grabber.grabPixels();
+		}
+		catch(InterruptedException e2) {
+			System.out.println("error: " + e2);
+		}
+	
+		
+				eseg.init(orig,width,height);
+				int[] res = eseg.process();
+                                				
+				res=threshold(res, threshold);
+				final Image output = createImage(new MemoryImageSource(width, height, res, 0, width));
+                                outputImage=output;
+					
+                                            Rectangle rect = edgedest.getBounds();
+                                            Image scimage = outputImage.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
+                             	            edgedest.setIcon(new ImageIcon(scimage));					
+					
+			
+	}
+public int[] threshold(int[] original, int value) {
+		for(int x=0; x<original.length; x++) {
+			if((original[x] & 0xff)>=value)
+				original[x]=0xffffffff;
+			else
+				original[x]=0xff000000;
+		}
+		return original;
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,65 +107,47 @@ public class edgeSegFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        edgepsrc = new javax.swing.JPanel();
-        edgepdest = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        edgerbe = new javax.swing.JRadioButton();
-        edgerbd = new javax.swing.JRadioButton();
+        jradioButton1 = new javax.swing.JRadioButton();
+        jradiobutton2 = new javax.swing.JRadioButton();
         edgeslider = new javax.swing.JSlider();
         bedgesave = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         Tfthresh = new javax.swing.JTextField();
+        edgesrc = new javax.swing.JLabel();
+        edgedest = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 600));
         getContentPane().setLayout(null);
-
-        edgepsrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout edgepsrcLayout = new javax.swing.GroupLayout(edgepsrc);
-        edgepsrc.setLayout(edgepsrcLayout);
-        edgepsrcLayout.setHorizontalGroup(
-            edgepsrcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
-        );
-        edgepsrcLayout.setVerticalGroup(
-            edgepsrcLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 238, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(edgepsrc);
-        edgepsrc.setBounds(80, 60, 320, 240);
-
-        edgepdest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout edgepdestLayout = new javax.swing.GroupLayout(edgepdest);
-        edgepdest.setLayout(edgepdestLayout);
-        edgepdestLayout.setHorizontalGroup(
-            edgepdestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
-        );
-        edgepdestLayout.setVerticalGroup(
-            edgepdestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 238, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(edgepdest);
-        edgepdest.setBounds(480, 60, 310, 240);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel1.setText("Threshold");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(70, 350, 80, 16);
 
-        edgerbe.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        edgerbe.setText("Enable");
-        getContentPane().add(edgerbe);
-        edgerbe.setBounds(60, 380, 71, 27);
+        buttonGroup1.add(jradioButton1);
+        jradioButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jradioButton1.setText("Enable");
+        jradioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jradioButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jradioButton1);
+        jradioButton1.setBounds(60, 380, 71, 27);
 
-        edgerbd.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        edgerbd.setText("Disable");
-        getContentPane().add(edgerbd);
-        edgerbd.setBounds(60, 410, 73, 27);
+        buttonGroup1.add(jradiobutton2);
+        jradiobutton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jradiobutton2.setText("Disable");
+        jradiobutton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jradiobutton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jradiobutton2);
+        jradiobutton2.setBounds(60, 410, 73, 27);
 
         edgeslider.setMajorTickSpacing(40);
         edgeslider.setMaximum(255);
@@ -92,6 +155,11 @@ public class edgeSegFrame extends javax.swing.JFrame {
         edgeslider.setPaintLabels(true);
         edgeslider.setPaintTicks(true);
         edgeslider.setSnapToTicks(true);
+        edgeslider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                edgesliderStateChanged(evt);
+            }
+        });
         getContentPane().add(edgeslider);
         edgeslider.setBounds(220, 400, 450, 50);
 
@@ -107,8 +175,41 @@ public class edgeSegFrame extends javax.swing.JFrame {
         getContentPane().add(Tfthresh);
         Tfthresh.setBounds(440, 360, 50, 20);
 
+        edgesrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(edgesrc);
+        edgesrc.setBounds(110, 100, 290, 170);
+
+        edgedest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(edgedest);
+        edgedest.setBounds(510, 90, 300, 190);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void edgesliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_edgesliderStateChanged
+
+        // TODO add your handling code here:
+         JSlider source = (JSlider)evt.getSource();
+	        if (!source.getValueIsAdjusting()) {
+				System.out.println("threshold="+source.getValue());
+				threshold=source.getValue();
+				Tfthresh.setText(""+source.getValue());
+                               processImage();                             
+                               
+                }
+    }//GEN-LAST:event_edgesliderStateChanged
+
+    private void jradioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradioButton1ActionPerformed
+        // TODO add your handling code here:
+        thresholdActive=true;
+        edgeslider.setEnabled(true);
+    }//GEN-LAST:event_jradioButton1ActionPerformed
+
+    private void jradiobutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradiobutton2ActionPerformed
+        // TODO add your handling code here:
+        thresholdActive=false;
+        edgeslider.setEnabled(false);
+    }//GEN-LAST:event_jradiobutton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,12 +249,13 @@ public class edgeSegFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Tfthresh;
     private javax.swing.JButton bedgesave;
-    private javax.swing.JPanel edgepdest;
-    private javax.swing.JPanel edgepsrc;
-    private javax.swing.JRadioButton edgerbd;
-    private javax.swing.JRadioButton edgerbe;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel edgedest;
     private javax.swing.JSlider edgeslider;
+    private javax.swing.JLabel edgesrc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JRadioButton jradioButton1;
+    private javax.swing.JRadioButton jradiobutton2;
     // End of variables declaration//GEN-END:variables
 }
