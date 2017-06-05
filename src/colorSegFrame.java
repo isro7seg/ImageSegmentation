@@ -21,7 +21,7 @@ public class colorSegFrame extends javax.swing.JFrame {
                 initComponents();
                  cseg=new ColorSegmentation(MainSegFrame.image);
                  /**********This code is for showing image at disabling of radio button
-                  It will show the image at threshold 30 ie. default**********/
+                  It will show the image at threshold 30 i.e. default**********/
                  BufferedImage outimg=cseg.segmentize(30);
                  outputImage=outimg;
                     Rectangle rectout = colordest.getBounds();
