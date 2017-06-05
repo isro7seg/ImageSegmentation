@@ -1,4 +1,5 @@
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Rectangle;
@@ -14,36 +15,17 @@ import javax.swing.JProgressBar;
 import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author HP
- */
 public class edgeSegFrame extends javax.swing.JFrame {
      EdgeSegmentation eseg;
       Image outputImage;
 	MediaTracker tracker = null;
 	PixelGrabber grabber = null;
 	int width = 0, height = 0;
-        
-
 	//slider constraints
 	int threshold=60;
 	boolean thresholdActive=false;
-
 	int imageNumber=0;
 	public int orig[] = null;
-	
-	
-	
-	
-	
 	
     /**
      * Creates new form edgeSegFrame
@@ -53,13 +35,11 @@ public class edgeSegFrame extends javax.swing.JFrame {
          Rectangle rect = edgesrc.getBounds(null);
          width=MainSegFrame.image.getWidth();
          height=MainSegFrame.image.getHeight();
-         
          Image scimage = MainSegFrame.image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
          edgesrc.setIcon(new ImageIcon(scimage));
         jradiobutton2.setSelected(true);
         thresholdActive=false;
         edgeslider.setEnabled(false);
-        
         eseg=new EdgeSegmentation();
         processImage();              
                
@@ -73,15 +53,11 @@ private void processImage(){
 		catch(InterruptedException e2) {
 			System.out.println("error: " + e2);
 		}
-	
-		
 				eseg.init(orig,width,height);
-				int[] res = eseg.process();
-                                				
+				int[] res = eseg.process();	
 				res=threshold(res, threshold);
 				final Image output = createImage(new MemoryImageSource(width, height, res, 0, width));
                                 outputImage=output;
-					
                                             Rectangle rect = edgedest.getBounds();
                                             Image scimage = outputImage.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
                              	            edgedest.setIcon(new ImageIcon(scimage));					
@@ -90,7 +66,7 @@ private void processImage(){
 	}
 public int[] threshold(int[] original, int value) {
 		for(int x=0; x<original.length; x++) {
-			if((original[x] & 0xff)>=value)
+			if((original[x] & 0xff)>=value&&(original[x]>>8&0xff)>=value&&(original[x]>>16&0xff)>=value)
 				original[x]=0xffffffff;
 			else
 				original[x]=0xff000000;
@@ -164,6 +140,11 @@ public int[] threshold(int[] original, int value) {
         edgeslider.setBounds(220, 400, 450, 50);
 
         bedgesave.setText("Save");
+        bedgesave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bedgesaveActionPerformed(evt);
+            }
+        });
         getContentPane().add(bedgesave);
         bedgesave.setBounds(710, 400, 61, 25);
 
@@ -210,6 +191,15 @@ public int[] threshold(int[] original, int value) {
         thresholdActive=false;
         edgeslider.setEnabled(false);
     }//GEN-LAST:event_jradiobutton2ActionPerformed
+
+    private void bedgesaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bedgesaveActionPerformed
+      // FileHandling fh=new FileHandling(this);
+           // BufferedImage bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
+       
+      //      fh.WriteImage(bimage);
+
+
+    }//GEN-LAST:event_bedgesaveActionPerformed
 
     /**
      * @param args the command line arguments
