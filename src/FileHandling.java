@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 public class FileHandling {
     JFileChooser chooser;
     int result;
-    JFrame frame; 
+    JFrame frame=null; 
     File file=null;
     String imgPath=null; // to get path of the source image in the main frame as golbal varibale
 
