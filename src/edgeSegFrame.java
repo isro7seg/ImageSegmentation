@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 public class edgeSegFrame extends javax.swing.JFrame {
      EdgeSegmentation eseg;
       Image outputImage;
+      BufferedImage bimage;
 	MediaTracker tracker = null;
 	PixelGrabber grabber = null;
 	int width = 0, height = 0;
@@ -61,7 +62,8 @@ private void processImage(){
                                             Rectangle rect = edgedest.getBounds();
                                             Image scimage = outputImage.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
                              	            edgedest.setIcon(new ImageIcon(scimage));					
-					
+			        bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
+                                bimage.setRGB(0,0,width,height,res,0,width);       	
 			
 	}
 public int[] threshold(int[] original, int value) {
@@ -193,10 +195,8 @@ public int[] threshold(int[] original, int value) {
     }//GEN-LAST:event_jradiobutton2ActionPerformed
 
     private void bedgesaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bedgesaveActionPerformed
-      // FileHandling fh=new FileHandling(this);
-           // BufferedImage bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
-       
-      //      fh.WriteImage(bimage);
+      FileHandling fh=new FileHandling(this);
+      fh.WriteImage(bimage);
 
 
     }//GEN-LAST:event_bedgesaveActionPerformed
