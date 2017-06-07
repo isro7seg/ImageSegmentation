@@ -34,7 +34,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
         Active=false;
         
         wtrshd=new WatershedSegmentation();
-        output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+        output=wtrshd.calculateWatershedImage(Utilities.getImageCopy(MainSegFrame.image), floodpts, windowWidth, conpix);
         waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
         
     }
@@ -82,7 +82,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jradioButton1);
-        jradioButton1.setBounds(20, 390, 57, 23);
+        jradioButton1.setBounds(20, 390, 67, 25);
 
         buttonGroup2.add(jradiobutton2);
         jradiobutton2.setText("Disable");
@@ -92,7 +92,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jradiobutton2);
-        jradiobutton2.setBounds(20, 420, 59, 23);
+        jradiobutton2.setBounds(20, 420, 69, 25);
 
         fpointSlider.setMajorTickSpacing(40);
         fpointSlider.setMaximum(256);
@@ -118,11 +118,11 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(bedgesave);
-        bedgesave.setBounds(670, 390, 57, 23);
+        bedgesave.setBounds(670, 390, 61, 25);
 
         jLabel2.setText("Flood Point Count");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(320, 310, 100, 14);
+        jLabel2.setBounds(320, 310, 100, 16);
 
         fpcount.setEditable(false);
         getContentPane().add(fpcount);
@@ -152,19 +152,19 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(windowSlider);
-        windowSlider.setBounds(180, 430, 430, 31);
+        windowSlider.setBounds(180, 430, 430, 36);
 
         jLabel3.setText("Minimum Window Width");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(290, 400, 130, 14);
+        jLabel3.setBounds(290, 400, 130, 16);
 
         winwidth.setEditable(false);
         getContentPane().add(winwidth);
-        winwidth.setBounds(420, 400, 50, 20);
+        winwidth.setBounds(420, 400, 50, 22);
 
         jLabel4.setText("Connected Pixels");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(300, 480, 100, 14);
+        jLabel4.setBounds(300, 480, 100, 16);
 
         buttonGroup1.add(pix4rb);
         pix4rb.setText("4 Pixels");
@@ -174,7 +174,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pix4rb);
-        pix4rb.setBounds(420, 480, 61, 23);
+        pix4rb.setBounds(420, 480, 71, 25);
 
         buttonGroup1.add(pix8rb);
         pix8rb.setText("8 Pixels");
@@ -184,7 +184,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pix8rb);
-        pix8rb.setBounds(540, 480, 61, 23);
+        pix8rb.setBounds(540, 480, 71, 25);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -216,7 +216,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             floodpts=fpointSlider.getValue();
             fpcount.setText(""+floodpts); 
             wtrshd=new WatershedSegmentation();
-           output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+           output=wtrshd.calculateWatershedImage(Utilities.getImageCopy(MainSegFrame.image), floodpts, windowWidth, conpix);
             waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
         }
     }//GEN-LAST:event_fpointSliderStateChanged
@@ -234,7 +234,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             windowWidth=windowSlider.getValue();
             winwidth.setText(""+windowWidth); 
             wtrshd=new WatershedSegmentation();
-            output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+            output=wtrshd.calculateWatershedImage(Utilities.getImageCopy(MainSegFrame.image), floodpts, windowWidth, conpix);
             waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
         }
     }//GEN-LAST:event_windowSliderStateChanged
@@ -243,7 +243,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         conpix=4;
         wtrshd=new WatershedSegmentation();
-        output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+        output=wtrshd.calculateWatershedImage(Utilities.getImageCopy(MainSegFrame.image), floodpts, windowWidth, conpix);
         waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
     }//GEN-LAST:event_pix4rbActionPerformed
 
@@ -251,7 +251,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         conpix=8;
         wtrshd=new WatershedSegmentation();
-        output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+        output=wtrshd.calculateWatershedImage(Utilities.getImageCopy(MainSegFrame.image), floodpts, windowWidth, conpix);
         waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
     }//GEN-LAST:event_pix8rbActionPerformed
 

@@ -25,6 +25,12 @@ public class Utilities {
        return new ImageIcon(scimage);
     }
     
+    public static BufferedImage getImageCopy(BufferedImage bi) {
+    ColorModel cm = bi.getColorModel();
+    boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+    WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
+    return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+}
     public static void convertToGreyscale(BufferedImage img){
         //get image width and height
     int width = img.getWidth();
