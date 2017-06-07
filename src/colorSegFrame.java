@@ -24,6 +24,7 @@ public class colorSegFrame extends javax.swing.JFrame {
                   It will show the image at threshold 30 i.e. default**********/
                  BufferedImage outimg=cseg.segmentize(30);
                  outputImage=outimg;
+                 Tfthresh.setText(""+30);
                     Rectangle rectout = colordest.getBounds();
                    Image scimageout = outimg.getScaledInstance(rectout.width,rectout.height,Image.SCALE_DEFAULT);
                    ImageIcon iconout = new ImageIcon(scimageout); 
@@ -113,7 +114,7 @@ public class colorSegFrame extends javax.swing.JFrame {
         colorslider.setPaintLabels(true);
         colorslider.setPaintTicks(true);
         colorslider.setSnapToTicks(true);
-        colorslider.setValue(10);
+        colorslider.setValue(30);
         colorslider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 colorsliderStateChanged(evt);

@@ -33,6 +33,7 @@ public class edgeSegFrame extends javax.swing.JFrame {
      */
     public edgeSegFrame() {
         initComponents();
+        Tfthresh.setText(""+30);
          Rectangle rect = edgesrc.getBounds(null);
          width=MainSegFrame.image.getWidth();
          height=MainSegFrame.image.getHeight();
@@ -136,6 +137,7 @@ public int[] threshold(int[] original, int value) {
         edgeslider.setPaintLabels(true);
         edgeslider.setPaintTicks(true);
         edgeslider.setSnapToTicks(true);
+        edgeslider.setValue(30);
         edgeslider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 edgesliderStateChanged(evt);
