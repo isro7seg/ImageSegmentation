@@ -61,7 +61,8 @@ private void processImage(){
                                 outputImage=output;
                                             Rectangle rect = edgedest.getBounds();
                                             Image scimage = outputImage.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
-                             	            edgedest.setIcon(new ImageIcon(scimage));					
+                             	            edgedest.setIcon(new ImageIcon(scimage));
+                                            //conversion of image to buffered image
 			        bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
                                 bimage.setRGB(0,0,width,height,res,0,width);       	
 			

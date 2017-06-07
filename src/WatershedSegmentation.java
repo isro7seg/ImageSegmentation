@@ -23,28 +23,24 @@ public class WatershedSegmentation {
     int g_w; 
     int g_h; 
      
-    public static void main(String[] args) { 
+    public BufferedImage getWaterImage(BufferedImage src_img,int floodPoints,int windowWidth,iint connectedPixels ){ 
        
-        String src = "C:\\Users\\ssd\\Documents\\NetBeansProjects\\ImageSegmentation\\src\\film.png"; 
-        String dst = "C:\\Users\\ssd\\Documents\\NetBeansProjects\\ImageSegmentation\\src\\colorimage12.png"; 
-        int floodPoints = 100; 
-        int windowWidth = 30; 
-        int connectedPixels =8; 
-         
-        Watershed watershed = new Watershed(); 
+        
+        
+                 
          
         long start = System.currentTimeMillis(); 
-        BufferedImage dstImage = watershed.calculate(loadImage(src), 
+        BufferedImage dstImage = calculate(src_img, 
                 floodPoints,windowWidth,connectedPixels); 
         long end = System.currentTimeMillis(); 
          
         // save the resulting image 
         long totalms = (end-start); 
         System.out.println("Took: "+totalms+" milliseconds"); 
-        saveImage(dst, dstImage); 
-    } 
+       
+    }
      
-    private BufferedImage calculate(BufferedImage image,  
+    public BufferedImage calculate(BufferedImage image,  
             int floodPoints, int windowWidth,  
             int connectedPixels) { 
         /* 
@@ -267,7 +263,7 @@ public class WatershedSegmentation {
         } 
     } 
      
-    public static void saveImage(String filename,  
+   /* public static void saveImage(String filename,  
             BufferedImage image) { 
         File file = new File(filename); 
         try { 
@@ -286,7 +282,7 @@ public class WatershedSegmentation {
                                 +filename+"' not found."); 
         } 
         return result; 
-    } 
+    } */
      
     class FloodPoint implements Comparable<Object> { 
         int x; 

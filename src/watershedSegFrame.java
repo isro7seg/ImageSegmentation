@@ -1,3 +1,6 @@
+
+import java.awt.image.BufferedImage;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,11 +13,19 @@
  */
 public class watershedSegFrame extends javax.swing.JFrame {
 
+    int windowWidth=30,floodpts=30,conpix=8;
+    BufferedImage output;
+        boolean Active;
     /**
      * Creates new form watershedSegFrame
      */
     public watershedSegFrame() {
-        initComponents();
+        initComponents();        
+        fpointSlider.setEnabled(false);
+        windowSlider.setEnabled(false);
+        jradiobutton2.setSelected(true);      
+        Active=false;
+        
     }
 
     /**
@@ -27,21 +38,22 @@ public class watershedSegFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jradioButton1 = new javax.swing.JRadioButton();
         jradiobutton2 = new javax.swing.JRadioButton();
-        edgeslider = new javax.swing.JSlider();
+        fpointSlider = new javax.swing.JSlider();
         bedgesave = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        Tfthresh = new javax.swing.JTextField();
-        edgesrc = new javax.swing.JLabel();
-        edgedest = new javax.swing.JLabel();
-        jSlider1 = new javax.swing.JSlider();
+        fpcount = new javax.swing.JTextField();
+        watersrc = new javax.swing.JLabel();
+        waterdest = new javax.swing.JLabel();
+        windowSlider = new javax.swing.JSlider();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        winwidth = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        pix4rb = new javax.swing.JRadioButton();
+        pix8rb = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -51,6 +63,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(20, 300, 80, 16);
 
+        buttonGroup2.add(jradioButton1);
         jradioButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jradioButton1.setText("Enable");
         jradioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +74,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
         getContentPane().add(jradioButton1);
         jradioButton1.setBounds(10, 330, 67, 27);
 
+        buttonGroup2.add(jradiobutton2);
         jradiobutton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jradiobutton2.setText("Disable");
         jradiobutton2.addActionListener(new java.awt.event.ActionListener() {
@@ -71,19 +85,22 @@ public class watershedSegFrame extends javax.swing.JFrame {
         getContentPane().add(jradiobutton2);
         jradiobutton2.setBounds(10, 360, 71, 27);
 
-        edgeslider.setMajorTickSpacing(40);
-        edgeslider.setMaximum(255);
-        edgeslider.setMinorTickSpacing(10);
-        edgeslider.setPaintLabels(true);
-        edgeslider.setPaintTicks(true);
-        edgeslider.setSnapToTicks(true);
-        edgeslider.addChangeListener(new javax.swing.event.ChangeListener() {
+        fpointSlider.setMajorTickSpacing(40);
+        fpointSlider.setMaximum(256);
+        fpointSlider.setMinimum(1
+        );
+        fpointSlider.setMinorTickSpacing(10);
+        fpointSlider.setPaintLabels(true);
+        fpointSlider.setPaintTicks(true);
+        fpointSlider.setSnapToTicks(true);
+        fpointSlider.setValue(30);
+        fpointSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                edgesliderStateChanged(evt);
+                fpointSliderStateChanged(evt);
             }
         });
-        getContentPane().add(edgeslider);
-        edgeslider.setBounds(170, 350, 450, 50);
+        getContentPane().add(fpointSlider);
+        fpointSlider.setBounds(170, 340, 450, 50);
 
         bedgesave.setText("Save");
         bedgesave.addActionListener(new java.awt.event.ActionListener() {
@@ -98,70 +115,98 @@ public class watershedSegFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(320, 310, 100, 14);
 
-        Tfthresh.setEditable(false);
-        getContentPane().add(Tfthresh);
-        Tfthresh.setBounds(420, 310, 50, 20);
+        fpcount.setEditable(false);
+        getContentPane().add(fpcount);
+        fpcount.setBounds(420, 310, 50, 20);
 
-        edgesrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(edgesrc);
-        edgesrc.setBounds(40, 40, 310, 190);
+        watersrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(watersrc);
+        watersrc.setBounds(40, 40, 310, 190);
 
-        edgedest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(edgedest);
-        edgedest.setBounds(460, 40, 300, 190);
-        getContentPane().add(jSlider1);
-        jSlider1.setBounds(180, 430, 430, 26);
+        waterdest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(waterdest);
+        waterdest.setBounds(460, 40, 300, 190);
+
+        windowSlider.setMajorTickSpacing(30);
+        windowSlider.setMaximum(256
+        );
+        windowSlider.setMinimum(8
+        );
+        windowSlider.setMinorTickSpacing(10);
+        windowSlider.setPaintLabels(true);
+        windowSlider.setPaintTicks(true);
+        windowSlider.setSnapToTicks(true);
+        windowSlider.setValue(30);
+        windowSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                windowSliderStateChanged(evt);
+            }
+        });
+        getContentPane().add(windowSlider);
+        windowSlider.setBounds(180, 430, 430, 31);
 
         jLabel3.setText("Minimum Window Width");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(300, 400, 120, 14);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(420, 400, 50, 20);
+        getContentPane().add(winwidth);
+        winwidth.setBounds(420, 400, 50, 20);
 
         jLabel4.setText("Connected Pixels");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(310, 470, 90, 14);
 
-        jRadioButton1.setText("4 Pixels");
-        getContentPane().add(jRadioButton1);
-        jRadioButton1.setBounds(420, 470, 61, 23);
+        buttonGroup1.add(pix4rb);
+        pix4rb.setText("4 Pixels");
+        getContentPane().add(pix4rb);
+        pix4rb.setBounds(420, 470, 61, 23);
 
-        jRadioButton2.setText("8 Pixels");
-        getContentPane().add(jRadioButton2);
-        jRadioButton2.setBounds(520, 470, 61, 23);
+        buttonGroup1.add(pix8rb);
+        pix8rb.setText("8 Pixels");
+        getContentPane().add(pix8rb);
+        pix8rb.setBounds(520, 470, 61, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jradioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradioButton1ActionPerformed
         // TODO add your handling code here:
-        
+        Active=true;
+        fpointSlider.setEnabled(true);
+        windowSlider.setEnabled(true);
     }//GEN-LAST:event_jradioButton1ActionPerformed
 
     private void jradiobutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradiobutton2ActionPerformed
         // TODO add your handling code here:
-        thresholdActive=false;
-        edgeslider.setEnabled(false);
+      Active=false;
+      fpointSlider.setEnabled(false);
+      windowSlider.setEnabled(false);
     }//GEN-LAST:event_jradiobutton2ActionPerformed
 
-    private void edgesliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_edgesliderStateChanged
+    private void fpointSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_fpointSliderStateChanged
 
         // TODO add your handling code here:
-        JSlider source = (JSlider)evt.getSource();
-        if (!source.getValueIsAdjusting()) {
-            System.out.println("threshold="+source.getValue());
-            threshold=source.getValue();
-            Tfthresh.setText(""+source.getValue());
-            processImage();
-
+       
+        if (!fpointSlider.getValueIsAdjusting() && Active==true) {
+            System.out.println("Flood Point="+fpointSlider.getValue());
+            floodpts=fpointSlider.getValue();
+            fpcount.setText(""+floodpts); 
         }
-    }//GEN-LAST:event_edgesliderStateChanged
+    }//GEN-LAST:event_fpointSliderStateChanged
 
     private void bedgesaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bedgesaveActionPerformed
         FileHandling fh=new FileHandling(this);
-        fh.WriteImage(bimage);
+        
 
     }//GEN-LAST:event_bedgesaveActionPerformed
+
+    private void windowSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_windowSliderStateChanged
+        // TODO add your handling code here:
+         if (!windowSlider.getValueIsAdjusting()&& Active==true) {
+            System.out.println("Window Width="+windowSlider.getValue());
+            windowWidth=windowSlider.getValue();
+            winwidth.setText(""+windowWidth); 
+        }
+    }//GEN-LAST:event_windowSliderStateChanged
 
     /**
      * @param args the command line arguments
@@ -199,21 +244,22 @@ public class watershedSegFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Tfthresh;
     private javax.swing.JButton bedgesave;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JLabel edgedest;
-    private javax.swing.JSlider edgeslider;
-    private javax.swing.JLabel edgesrc;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JTextField fpcount;
+    private javax.swing.JSlider fpointSlider;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JRadioButton jradioButton1;
     private javax.swing.JRadioButton jradiobutton2;
+    private javax.swing.JRadioButton pix4rb;
+    private javax.swing.JRadioButton pix8rb;
+    private javax.swing.JLabel waterdest;
+    private javax.swing.JLabel watersrc;
+    private javax.swing.JSlider windowSlider;
+    private javax.swing.JTextField winwidth;
     // End of variables declaration//GEN-END:variables
 }
