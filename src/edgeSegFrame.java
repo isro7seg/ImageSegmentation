@@ -1,4 +1,5 @@
 
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Rectangle;
@@ -136,7 +137,7 @@ public int[] threshold(int[] original, int value) {
             }
         });
         getContentPane().add(jradioButton1);
-        jradioButton1.setBounds(60, 380, 71, 27);
+        jradioButton1.setBounds(60, 380, 67, 27);
 
         buttonGroup1.add(jradiobutton2);
         jradiobutton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -147,7 +148,7 @@ public int[] threshold(int[] original, int value) {
             }
         });
         getContentPane().add(jradiobutton2);
-        jradiobutton2.setBounds(60, 410, 73, 27);
+        jradiobutton2.setBounds(60, 410, 71, 27);
 
         edgeslider.setMajorTickSpacing(40);
         edgeslider.setMaximum(255);
@@ -164,12 +165,17 @@ public int[] threshold(int[] original, int value) {
         edgeslider.setBounds(220, 400, 450, 50);
 
         bedgesave.setText("Save");
+        bedgesave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bedgesaveActionPerformed(evt);
+            }
+        });
         getContentPane().add(bedgesave);
-        bedgesave.setBounds(710, 400, 61, 25);
+        bedgesave.setBounds(710, 400, 57, 23);
 
         jLabel2.setText("Threshold");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(361, 360, 100, 16);
+        jLabel2.setBounds(361, 360, 100, 14);
 
         Tfthresh.setEditable(false);
         getContentPane().add(Tfthresh);
@@ -210,6 +216,16 @@ public int[] threshold(int[] original, int value) {
         thresholdActive=false;
         edgeslider.setEnabled(false);
     }//GEN-LAST:event_jradiobutton2ActionPerformed
+
+    private void bedgesaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bedgesaveActionPerformed
+        // TODO add your handling code here:
+        BufferedImage bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(outputImage, 0, 0, null);
+        bGr.dispose();
+        FileHandling fh=new FileHandling(this);        
+        fh.WriteImage(bimage);
+    }//GEN-LAST:event_bedgesaveActionPerformed
 
     /**
      * @param args the command line arguments
