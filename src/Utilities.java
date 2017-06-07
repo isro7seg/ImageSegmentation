@@ -2,6 +2,8 @@
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -76,7 +78,12 @@ public class Utilities {
       }
     }
     }
-      
+      public static BufferedImage getImageCopy(BufferedImage image){
+          ColorModel model = image.getColorModel();
+          WritableRaster raster = image.copyData(null);
+          BufferedImage clone = new BufferedImage(model, raster, model.isAlphaPremultiplied(), null);
+          return clone;
+      }
     
     }
 
