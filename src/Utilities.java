@@ -2,6 +2,8 @@
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -22,5 +24,12 @@ public class Utilities {
        Image scimage = img.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
        return new ImageIcon(scimage);
     }
+    
+    public static BufferedImage getImageCopy(BufferedImage bi) {
+    ColorModel cm = bi.getColorModel();
+    boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+    WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
+    return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+}
 
 }

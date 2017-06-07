@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author ssd
- */
 
 import java.awt.Color; 
 import java.awt.Graphics; 
@@ -66,6 +56,7 @@ public class WatershedSegmentation {
                 // this minimum (using square, could be circle...) 
                 int half = windowWidth/2; 
                 fill(x-half,y-half,x+half,y+half,lut,0); 
+                //Here window size signifies that we cannot make a segment shorter than this.
                 lut[minimumPosition] = 0; 
                 foundMinimums++; 
             } else { 
@@ -92,6 +83,11 @@ public class WatershedSegmentation {
         lut = flood(map,minimums,connectedPixels); 
          
         // return flooded image 
+     /*   System.out.println("Lut Length"+lut.length);
+        for(int i=0;i<lut.length;i++)
+        {
+            System.out.println(lut[i]+" ");
+        }*/
         image.setRGB(0, 0, g_w, g_h, lut, 0, g_w); 
         /*// create image with boundaries also 
         for (int i=0;i<minimums.size();i++) { 
