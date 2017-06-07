@@ -25,21 +25,14 @@ public class colorSegFrame extends javax.swing.JFrame {
                  BufferedImage outimg=cseg.segmentize(30);
                  outputImage=outimg;
                  Tfthresh.setText(""+30);
-                    Rectangle rectout = colordest.getBounds();
-                   Image scimageout = outimg.getScaledInstance(rectout.width,rectout.height,Image.SCALE_DEFAULT);
-                   ImageIcon iconout = new ImageIcon(scimageout); 
-                    colordest.setIcon(iconout);
+                 colordest.setIcon(Utilities.getScaledIcon(colordest, outimg));
                     /*****************/
                               
                  colorslider.setEnabled(false);
                  jRadioButton2.setSelected(true);
        // this.image=image;
         
-             Rectangle rect = colorsource.getBounds();
-      Image scimage = MainSegFrame.image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
-     
-       ImageIcon icon = new ImageIcon(scimage); 
-        colorsource.setIcon(icon);
+           colorsource.setIcon(Utilities.getScaledIcon(colorsource,MainSegFrame.image));
         
     }
 
@@ -165,10 +158,7 @@ public class colorSegFrame extends javax.swing.JFrame {
                                 cseg=new ColorSegmentation(MainSegFrame.image);
                                 outimg= cseg.segmentize(threshold);
                                outputImage=outimg;
-                               Rectangle rect = colordest.getBounds();
-                               Image scimage = outimg.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
-                              ImageIcon icon = new ImageIcon(scimage); 
-                              colordest.setIcon(icon);
+                             colordest.setIcon(Utilities.getScaledIcon(colordest, outimg));
                                 
                 } 
         

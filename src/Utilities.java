@@ -1,4 +1,3 @@
-
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -7,16 +6,6 @@ import java.awt.image.WritableRaster;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author ssd
- */
 public class Utilities {
     
     public static ImageIcon getScaledIcon( JLabel label,BufferedImage img){
@@ -31,11 +20,12 @@ public class Utilities {
     WritableRaster raster = bi.copyData(bi.getRaster().createCompatibleWritableRaster());
     return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
 }
+    
     public static void convertToGreyscale(BufferedImage img){
         //get image width and height
     int width = img.getWidth();
     int height = img.getHeight();
-
+    
     //convert to grayscale
     for(int y = 0; y < height; y++){
       for(int x = 0; x < width; x++){
@@ -56,6 +46,7 @@ public class Utilities {
       }
     }
     }
+    
     public static void convertToNegative(BufferedImage img){
         //get image width and height
     int width = img.getWidth();
@@ -83,9 +74,7 @@ public class Utilities {
         img.setRGB(x, y, p);
       }
     }
-    }
-      
-    
+    }    
     }
 
 

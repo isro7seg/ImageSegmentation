@@ -16,67 +16,66 @@ import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 
 public class edgeSegFrame extends javax.swing.JFrame {
-     EdgeSegmentation eseg;
-      Image outputImage;
-      BufferedImage bimage;
-	MediaTracker tracker = null;
-	PixelGrabber grabber = null;
-	int width = 0, height = 0;
-	//slider constraints
-	int threshold=60;
-	boolean thresholdActive=false;
-	int imageNumber=0;
-	public int orig[] = null;
-	
+
+    EdgeSegmentation eseg;
+    Image outputImage;
+    BufferedImage bimage;
+    MediaTracker tracker = null;
+    PixelGrabber grabber = null;
+    int width = 0, height = 0;
+    //slider constraints
+    int threshold = 60;
+    boolean thresholdActive = false;
+    int imageNumber = 0;
+    public int orig[] = null;
+
     /**
      * Creates new form edgeSegFrame
      */
     public edgeSegFrame() {
         initComponents();
-        Tfthresh.setText(""+30);
-         Rectangle rect = edgesrc.getBounds(null);
-         width=MainSegFrame.image.getWidth();
-         height=MainSegFrame.image.getHeight();
-         Image scimage = MainSegFrame.image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
-         edgesrc.setIcon(new ImageIcon(scimage));
+        Tfthresh.setText("" + 30);
+        width = MainSegFrame.image.getWidth();
+        height = MainSegFrame.image.getHeight();
+        edgesrc.setIcon(Utilities.getScaledIcon(edgesrc, MainSegFrame.image));
         jradiobutton2.setSelected(true);
-        thresholdActive=false;
+        thresholdActive = false;
         edgeslider.setEnabled(false);
-        eseg=new EdgeSegmentation();
-        processImage();              
-               
+        eseg = new EdgeSegmentation();
+        processImage();
+
     }
-private void processImage(){
-		orig=new int[width*height];
-		PixelGrabber grabber = new PixelGrabber(MainSegFrame.image, 0, 0, width, height, orig, 0, width);
-		try {
-			grabber.grabPixels();
-		}
-		catch(InterruptedException e2) {
-			System.out.println("error: " + e2);
-		}
-				eseg.init(orig,width,height);
-				int[] res = eseg.process();	
-				res=threshold(res, threshold);
-				final Image output = createImage(new MemoryImageSource(width, height, res, 0, width));
-                                outputImage=output;
-                                            Rectangle rect = edgedest.getBounds();
-                                            Image scimage = outputImage.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
-                             	            edgedest.setIcon(new ImageIcon(scimage));
-                                            //conversion of image to buffered image
-			        bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
-                                bimage.setRGB(0,0,width,height,res,0,width);       	
-			
-	}
-public int[] threshold(int[] original, int value) {
-		for(int x=0; x<original.length; x++) {
-			if((original[x] & 0xff)>=value&&(original[x]>>8&0xff)>=value&&(original[x]>>16&0xff)>=value)
-				original[x]=0xffffffff;
-			else
-				original[x]=0xff000000;
-		}
-		return original;
-	}
+
+    private void processImage() {
+        orig = new int[width * height];
+        PixelGrabber grabber = new PixelGrabber(MainSegFrame.image, 0, 0, width, height, orig, 0, width);
+        try {
+            grabber.grabPixels();
+        } catch (InterruptedException e2) {
+            System.out.println("error: " + e2);
+        }
+        eseg.init(orig, width, height);
+        int[] res = eseg.process();
+        res = threshold(res, threshold);
+        final Image output = createImage(new MemoryImageSource(width, height, res, 0, width));
+        outputImage = output;
+        //conversion of image to buffered image
+        bimage = new BufferedImage(outputImage.getWidth(null), outputImage.getHeight(null), BufferedImage.TYPE_INT_RGB);
+        bimage.setRGB(0, 0, width, height, res, 0, width);
+        edgedest.setIcon(Utilities.getScaledIcon(edgedest, bimage));
+
+    }
+
+    public int[] threshold(int[] original, int value) {
+        for (int x = 0; x < original.length; x++) {
+            if ((original[x] & 0xff) >= value && (original[x] >> 8 & 0xff) >= value && (original[x] >> 16 & 0xff) >= value) {
+                original[x] = 0xffffffff;
+            } else {
+                original[x] = 0xff000000;
+            }
+        }
+        return original;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -177,31 +176,31 @@ public int[] threshold(int[] original, int value) {
     private void edgesliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_edgesliderStateChanged
 
         // TODO add your handling code here:
-         JSlider source = (JSlider)evt.getSource();
-	        if (!source.getValueIsAdjusting()) {
-				System.out.println("threshold="+source.getValue());
-				threshold=source.getValue();
-				Tfthresh.setText(""+source.getValue());
-                               processImage();                             
-                               
-                }
+        JSlider source = (JSlider) evt.getSource();
+        if (!source.getValueIsAdjusting()) {
+            System.out.println("threshold=" + source.getValue());
+            threshold = source.getValue();
+            Tfthresh.setText("" + source.getValue());
+            processImage();
+
+        }
     }//GEN-LAST:event_edgesliderStateChanged
 
     private void jradioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradioButton1ActionPerformed
         // TODO add your handling code here:
-        thresholdActive=true;
+        thresholdActive = true;
         edgeslider.setEnabled(true);
     }//GEN-LAST:event_jradioButton1ActionPerformed
 
     private void jradiobutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradiobutton2ActionPerformed
         // TODO add your handling code here:
-        thresholdActive=false;
+        thresholdActive = false;
         edgeslider.setEnabled(false);
     }//GEN-LAST:event_jradiobutton2ActionPerformed
 
     private void bedgesaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bedgesaveActionPerformed
-      FileHandling fh=new FileHandling(this);
-      fh.WriteImage(bimage);
+        FileHandling fh = new FileHandling(this);
+        fh.WriteImage(bimage);
 
 
     }//GEN-LAST:event_bedgesaveActionPerformed

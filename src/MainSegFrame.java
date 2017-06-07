@@ -9,13 +9,14 @@ import javax.swing.JOptionPane;
 public class MainSegFrame extends javax.swing.JFrame {
 
     String img_src=null;
+   public static BufferedImage inputimage=null;
    public static BufferedImage image=null;
     
     
     public MainSegFrame() {
-        initComponents();
+     
+     initComponents();
     }
-
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -36,6 +37,7 @@ public class MainSegFrame extends javax.swing.JFrame {
         Grayscale = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         Negative = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         About = new javax.swing.JMenu();
         Help = new javax.swing.JMenu();
 
@@ -87,11 +89,29 @@ public class MainSegFrame extends javax.swing.JFrame {
         Edit.setText("Edit");
 
         Grayscale.setText("Grayscale");
+        Grayscale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GrayscaleActionPerformed(evt);
+            }
+        });
         Edit.add(Grayscale);
         Edit.add(jSeparator2);
 
         Negative.setText("Negative");
+        Negative.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NegativeActionPerformed(evt);
+            }
+        });
         Edit.add(Negative);
+
+        jMenuItem2.setText("Reset");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        Edit.add(jMenuItem2);
 
         jMenuBar1.add(Edit);
 
@@ -111,7 +131,6 @@ if(image==null){
     JOptionPane.showMessageDialog(this,"Please select an image first, then proceed with segmentation options");
 }
 else{
-    
         int i=segCombo.getSelectedIndex();
         System.out.println(""+i);
 switch(i)
@@ -142,15 +161,34 @@ switch(i)
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
         FileHandling fh=new FileHandling(this);
-        image=fh.ReadImage();
-       
-      Rectangle rect = mainsrc.getBounds();
-      Image scimage = image.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);   
-      
-        ImageIcon icon = new ImageIcon(scimage); 
+        inputimage=fh.ReadImage();
         
-        mainsrc.setIcon(icon);
+       image=Utilities.getImageCopy(inputimage);
+      
+       mainsrc.setIcon(Utilities.getScaledIcon(mainsrc,image));
     }//GEN-LAST:event_OpenActionPerformed
+
+    private void GrayscaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrayscaleActionPerformed
+        // TODO add your handling code here:
+        
+        Utilities.convertToGreyscale(image);
+        mainsrc.setIcon(Utilities.getScaledIcon(mainsrc,image));
+        
+    }//GEN-LAST:event_GrayscaleActionPerformed
+
+    private void NegativeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NegativeActionPerformed
+        // TODO add your handling code here:
+        
+         Utilities. convertToNegative(image);
+         mainsrc.setIcon(Utilities.getScaledIcon(mainsrc,image));
+    }//GEN-LAST:event_NegativeActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        image = Utilities.getImageCopy(inputimage);
+        mainsrc.setIcon(Utilities.getScaledIcon(mainsrc,image));
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,6 +238,7 @@ switch(i)
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JTextField jTextField1;
