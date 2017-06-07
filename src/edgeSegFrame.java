@@ -97,8 +97,10 @@ public int[] threshold(int[] original, int value) {
         edgesrc = new javax.swing.JLabel();
         edgedest = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 600));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Edge Segmentation");
+        setMinimumSize(new java.awt.Dimension(850, 600));
+        setPreferredSize(new java.awt.Dimension(850, 600));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -165,7 +167,7 @@ public int[] threshold(int[] original, int value) {
 
         edgedest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(edgedest);
-        edgedest.setBounds(510, 90, 300, 190);
+        edgedest.setBounds(470, 100, 300, 170);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

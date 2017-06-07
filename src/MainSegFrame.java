@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 public class MainSegFrame extends javax.swing.JFrame {
 
     String img_src=null;
-   public static BufferedImage image;
+   public static BufferedImage image=null;
     
     
     public MainSegFrame() {
@@ -46,6 +46,7 @@ public class MainSegFrame extends javax.swing.JFrame {
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Image Segmentation");
         setPreferredSize(new java.awt.Dimension(1000, 600));
         getContentPane().setLayout(null);
 
@@ -106,7 +107,12 @@ public class MainSegFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void segComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_segComboActionPerformed
-int i=segCombo.getSelectedIndex();
+if(image==null){
+    JOptionPane.showMessageDialog(this,"Please select an image first, then proceed with segmentation options");
+}
+else{
+    
+        int i=segCombo.getSelectedIndex();
         System.out.println(""+i);
 switch(i)
 {
@@ -130,7 +136,7 @@ switch(i)
         wtrshedf.setVisible(true);
         break;
     }
-}
+}    }
     }//GEN-LAST:event_segComboActionPerformed
 
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed

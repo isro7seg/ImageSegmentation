@@ -84,12 +84,7 @@ public class Utilities {
       }
     }
     }
-      public static BufferedImage getImageCopy(BufferedImage image){
-          ColorModel model = image.getColorModel();
-          WritableRaster raster = image.copyData(null);
-          BufferedImage clone = new BufferedImage(model, raster, model.isAlphaPremultiplied(), null);
-          return clone;
-      }
+      
     
     }
 

@@ -24,7 +24,9 @@ public class watershedSegFrame extends javax.swing.JFrame {
     
     public watershedSegFrame() {
         initComponents();  
-        windowWidth=30;floodpts=30;conpix=8;        
+        windowWidth=30;floodpts=30;conpix=8;   
+        winwidth.setText(""+windowWidth); 
+        fpcount.setText(""+floodpts);
         watersrc.setIcon(Utilities.getScaledIcon(watersrc, MainSegFrame.image));
         
         pix8rb.setSelected(true);
@@ -66,7 +68,9 @@ public class watershedSegFrame extends javax.swing.JFrame {
         pix4rb = new javax.swing.JRadioButton();
         pix8rb = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Watershed Segmentation");
+        setMinimumSize(new java.awt.Dimension(850, 600));
         setPreferredSize(new java.awt.Dimension(850, 600));
         getContentPane().setLayout(null);
 
@@ -82,7 +86,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jradioButton1);
-        jradioButton1.setBounds(20, 390, 67, 25);
+        jradioButton1.setBounds(20, 390, 80, 23);
 
         buttonGroup2.add(jradiobutton2);
         jradiobutton2.setText("Disable");
@@ -92,7 +96,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jradiobutton2);
-        jradiobutton2.setBounds(20, 420, 69, 25);
+        jradiobutton2.setBounds(20, 420, 80, 23);
 
         fpointSlider.setMajorTickSpacing(40);
         fpointSlider.setMaximum(256);
@@ -118,11 +122,11 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(bedgesave);
-        bedgesave.setBounds(670, 390, 61, 25);
+        bedgesave.setBounds(670, 390, 57, 23);
 
         jLabel2.setText("Flood Point Count");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(320, 310, 100, 16);
+        jLabel2.setBounds(290, 310, 130, 14);
 
         fpcount.setEditable(false);
         getContentPane().add(fpcount);
@@ -152,19 +156,19 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(windowSlider);
-        windowSlider.setBounds(180, 430, 430, 36);
+        windowSlider.setBounds(180, 430, 430, 50);
 
         jLabel3.setText("Minimum Window Width");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(290, 400, 130, 16);
+        jLabel3.setBounds(270, 400, 150, 14);
 
         winwidth.setEditable(false);
         getContentPane().add(winwidth);
-        winwidth.setBounds(420, 400, 50, 22);
+        winwidth.setBounds(420, 400, 50, 20);
 
         jLabel4.setText("Connected Pixels");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(300, 480, 100, 16);
+        jLabel4.setBounds(290, 490, 100, 14);
 
         buttonGroup1.add(pix4rb);
         pix4rb.setText("4 Pixels");
@@ -174,7 +178,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pix4rb);
-        pix4rb.setBounds(420, 480, 71, 25);
+        pix4rb.setBounds(420, 490, 80, 23);
 
         buttonGroup1.add(pix8rb);
         pix8rb.setText("8 Pixels");
@@ -184,7 +188,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pix8rb);
-        pix8rb.setBounds(540, 480, 71, 25);
+        pix8rb.setBounds(540, 490, 100, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
