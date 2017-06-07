@@ -13,18 +13,29 @@ import java.awt.image.BufferedImage;
  */
 public class watershedSegFrame extends javax.swing.JFrame {
 
-    int windowWidth=30,floodpts=30,conpix=8;
+    int windowWidth,floodpts,conpix;
     BufferedImage output;
         boolean Active;
+        WatershedSegmentation wtrshd;
     /**
      * Creates new form watershedSegFrame
      */
+        
+    
     public watershedSegFrame() {
-        initComponents();        
+        initComponents();  
+        windowWidth=30;floodpts=30;conpix=8;        
+        watersrc.setIcon(Utilities.getScaledIcon(watersrc, MainSegFrame.image));
+        
+        pix8rb.setSelected(true);
         fpointSlider.setEnabled(false);
         windowSlider.setEnabled(false);
-        jradiobutton2.setSelected(true);      
+        jradiobutton2.setSelected(true); 
         Active=false;
+        
+        wtrshd=new WatershedSegmentation();
+        output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+        waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
         
     }
 
@@ -56,15 +67,14 @@ public class watershedSegFrame extends javax.swing.JFrame {
         pix8rb = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(850, 600));
         getContentPane().setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel1.setText("Threshold");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 300, 80, 16);
+        jLabel1.setBounds(30, 360, 80, 16);
 
         buttonGroup2.add(jradioButton1);
-        jradioButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jradioButton1.setText("Enable");
         jradioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,10 +82,9 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jradioButton1);
-        jradioButton1.setBounds(10, 330, 67, 27);
+        jradioButton1.setBounds(20, 390, 57, 23);
 
         buttonGroup2.add(jradiobutton2);
-        jradiobutton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jradiobutton2.setText("Disable");
         jradiobutton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,7 +92,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jradiobutton2);
-        jradiobutton2.setBounds(10, 360, 71, 27);
+        jradiobutton2.setBounds(20, 420, 59, 23);
 
         fpointSlider.setMajorTickSpacing(40);
         fpointSlider.setMaximum(256);
@@ -109,7 +118,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(bedgesave);
-        bedgesave.setBounds(660, 350, 57, 23);
+        bedgesave.setBounds(670, 390, 57, 23);
 
         jLabel2.setText("Flood Point Count");
         getContentPane().add(jLabel2);
@@ -121,7 +130,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
 
         watersrc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(watersrc);
-        watersrc.setBounds(40, 40, 310, 190);
+        watersrc.setBounds(60, 40, 310, 180);
 
         waterdest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(waterdest);
@@ -147,23 +156,35 @@ public class watershedSegFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Minimum Window Width");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(300, 400, 120, 14);
+        jLabel3.setBounds(290, 400, 130, 14);
+
+        winwidth.setEditable(false);
         getContentPane().add(winwidth);
         winwidth.setBounds(420, 400, 50, 20);
 
         jLabel4.setText("Connected Pixels");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(310, 470, 90, 14);
+        jLabel4.setBounds(300, 480, 100, 14);
 
         buttonGroup1.add(pix4rb);
         pix4rb.setText("4 Pixels");
+        pix4rb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pix4rbActionPerformed(evt);
+            }
+        });
         getContentPane().add(pix4rb);
-        pix4rb.setBounds(420, 470, 61, 23);
+        pix4rb.setBounds(420, 480, 61, 23);
 
         buttonGroup1.add(pix8rb);
         pix8rb.setText("8 Pixels");
+        pix8rb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pix8rbActionPerformed(evt);
+            }
+        });
         getContentPane().add(pix8rb);
-        pix8rb.setBounds(520, 470, 61, 23);
+        pix8rb.setBounds(540, 480, 61, 23);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -173,6 +194,8 @@ public class watershedSegFrame extends javax.swing.JFrame {
         Active=true;
         fpointSlider.setEnabled(true);
         windowSlider.setEnabled(true);
+        pix4rb.setEnabled(true);
+        pix8rb.setEnabled(true);
     }//GEN-LAST:event_jradioButton1ActionPerformed
 
     private void jradiobutton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jradiobutton2ActionPerformed
@@ -180,6 +203,8 @@ public class watershedSegFrame extends javax.swing.JFrame {
       Active=false;
       fpointSlider.setEnabled(false);
       windowSlider.setEnabled(false);
+      pix4rb.setEnabled(false);
+      pix8rb.setEnabled(false);
     }//GEN-LAST:event_jradiobutton2ActionPerformed
 
     private void fpointSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_fpointSliderStateChanged
@@ -190,12 +215,15 @@ public class watershedSegFrame extends javax.swing.JFrame {
             System.out.println("Flood Point="+fpointSlider.getValue());
             floodpts=fpointSlider.getValue();
             fpcount.setText(""+floodpts); 
+            wtrshd=new WatershedSegmentation();
+           output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+            waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
         }
     }//GEN-LAST:event_fpointSliderStateChanged
 
     private void bedgesaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bedgesaveActionPerformed
         FileHandling fh=new FileHandling(this);
-        
+        fh.WriteImage(output);
 
     }//GEN-LAST:event_bedgesaveActionPerformed
 
@@ -205,8 +233,27 @@ public class watershedSegFrame extends javax.swing.JFrame {
             System.out.println("Window Width="+windowSlider.getValue());
             windowWidth=windowSlider.getValue();
             winwidth.setText(""+windowWidth); 
+            wtrshd=new WatershedSegmentation();
+            output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+            waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
         }
     }//GEN-LAST:event_windowSliderStateChanged
+
+    private void pix4rbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pix4rbActionPerformed
+        // TODO add your handling code here:
+        conpix=4;
+        wtrshd=new WatershedSegmentation();
+        output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+        waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
+    }//GEN-LAST:event_pix4rbActionPerformed
+
+    private void pix8rbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pix8rbActionPerformed
+        // TODO add your handling code here:
+        conpix=8;
+        wtrshd=new WatershedSegmentation();
+        output=wtrshd.calculateWatershedImage(MainSegFrame.image, floodpts, windowWidth, conpix);
+        waterdest.setIcon(Utilities.getScaledIcon(waterdest, output));
+    }//GEN-LAST:event_pix8rbActionPerformed
 
     /**
      * @param args the command line arguments
