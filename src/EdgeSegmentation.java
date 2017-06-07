@@ -12,11 +12,6 @@ public class EdgeSegmentation {
 		int height;
 		double[] direction;
 
-		public void EdgeSegmentation() {
-			
-                        
-		}
-
 		public void init(int[] original, int widthIn, int heightIn) {
 			width=widthIn;
 			height=heightIn;
@@ -46,7 +41,9 @@ public class EdgeSegmentation {
 							sum += value;
 						}
 					}
+                                        //Here sobel is applied in y direction
 					GY[y*width+x] = sum;
+                                        sum=0;
 					for(int x1=0;x1<templateSize;x1++) {
 						for(int y1=0;y1<templateSize;y1++) {
 							int x2 = (x-(templateSize-1)/2+x1);
@@ -55,6 +52,7 @@ public class EdgeSegmentation {
 							sum += value;
 						}
 					}
+                                        //Here sobel os applied in X direction
 					GX[y*width+x] = sum;
 
 				}

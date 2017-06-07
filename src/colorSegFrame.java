@@ -158,8 +158,9 @@ public class colorSegFrame extends javax.swing.JFrame {
 				System.out.println("threshold="+source.getValue());
 				threshold=source.getValue();
 				Tfthresh.setText(""+source.getValue());
+                               BufferedImage outimg= new ColorSegmentation(MainSegFrame.image).segmentize(threshold);
                                 cseg=new ColorSegmentation(MainSegFrame.image);
-                               BufferedImage outimg= cseg.segmentize(threshold);
+                                outimg= cseg.segmentize(threshold);
                                outputImage=outimg;
                                Rectangle rect = colordest.getBounds();
                                Image scimage = outimg.getScaledInstance(rect.width,rect.height,Image.SCALE_DEFAULT);
