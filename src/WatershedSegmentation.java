@@ -23,33 +23,12 @@ public class WatershedSegmentation {
     int g_w; 
     int g_h; 
      
-    public BufferedImage getWaterImage(BufferedImage src_img,int floodPoints,int windowWidth,iint connectedPixels ){ 
-       
-        
-        
-                 
-         
-        long start = System.currentTimeMillis(); 
-        BufferedImage dstImage = calculate(src_img, 
-                floodPoints,windowWidth,connectedPixels); 
-        long end = System.currentTimeMillis(); 
-         
-        // save the resulting image 
-        long totalms = (end-start); 
-        System.out.println("Took: "+totalms+" milliseconds"); 
-       
-    }
+   
      
-    public BufferedImage calculate(BufferedImage image,  
+    public BufferedImage calculateWatershedImage(BufferedImage image,  
             int floodPoints, int windowWidth,  
             int connectedPixels) { 
-        /* 
-        // frame for real time view for the process 
-        frame = new JFrame(); 
-        frame.setSize(image.getWidth(),image.getHeight()); 
-        frame.setVisible(true); 
-        */ 
-         
+        
         g_w = image.getWidth(); 
         g_h = image.getHeight(); 
         // height map is the gray color image 

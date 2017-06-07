@@ -126,7 +126,9 @@ switch(i)
     }
     case 2:
     {
-        
+        watershedSegFrame wtrshedf=new watershedSegFrame();
+        wtrshedf.setVisible(true);
+        break;
     }
 }
     }//GEN-LAST:event_segComboActionPerformed

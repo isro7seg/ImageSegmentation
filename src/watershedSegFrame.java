@@ -134,7 +134,7 @@ public class watershedSegFrame extends javax.swing.JFrame {
 
         waterdest.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(waterdest);
-        waterdest.setBounds(460, 40, 300, 190);
+        waterdest.setBounds(460, 40, 300, 180);
 
         windowSlider.setMajorTickSpacing(30);
         windowSlider.setMaximum(256
