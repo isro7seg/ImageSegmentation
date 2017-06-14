@@ -1,8 +1,5 @@
 
-import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 
@@ -39,7 +36,6 @@ public class MainSegFrame extends javax.swing.JFrame {
         Negative = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         About = new javax.swing.JMenu();
-        Help = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -82,6 +78,11 @@ public class MainSegFrame extends javax.swing.JFrame {
         File.add(Open);
 
         Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitActionPerformed(evt);
+            }
+        });
         File.add(Exit);
 
         jMenuBar1.add(File);
@@ -116,10 +117,12 @@ public class MainSegFrame extends javax.swing.JFrame {
         jMenuBar1.add(Edit);
 
         About.setText("About");
+        About.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AboutMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(About);
-
-        Help.setText("Help");
-        jMenuBar1.add(Help);
 
         setJMenuBar(jMenuBar1);
 
@@ -196,6 +199,17 @@ switch(i)
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void AboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AboutMouseClicked
+        // TODO add your handling code here:
+        About abt=new About();
+        abt.setVisible(true);
+    }//GEN-LAST:event_AboutMouseClicked
+
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,7 +251,6 @@ switch(i)
     private javax.swing.JMenuItem Exit;
     private javax.swing.JMenu File;
     private javax.swing.JMenuItem Grayscale;
-    private javax.swing.JMenu Help;
     private javax.swing.JMenuItem Negative;
     private javax.swing.JMenuItem Open;
     private javax.swing.JLabel jLabel1;
