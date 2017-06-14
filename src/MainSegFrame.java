@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 public class MainSegFrame extends javax.swing.JFrame {
 
-    String img_src=null;
+   String img_src=null;
    public static BufferedImage inputimage=null;
    public static BufferedImage image=null;
     
@@ -154,6 +154,12 @@ switch(i)
         watershedSegFrame wtrshedf=new watershedSegFrame();
         wtrshedf.setVisible(true);
         break;
+    }
+    case 3:
+    {
+        texSegFrame tex=new texSegFrame();
+        tex.setVisible(true);
+        break;       
     }
 }    }
     }//GEN-LAST:event_segComboActionPerformed

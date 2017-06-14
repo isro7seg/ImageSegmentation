@@ -2,7 +2,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.RenderedImage;
 import java.awt.image.WritableRaster;
+import java.util.Hashtable;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -74,7 +76,34 @@ public class Utilities {
         img.setRGB(x, y, p);
       }
     }
-    }    
+    }
+
+    public static double getRadian(int deg){
+        return deg*Math.PI/180;
+    }
+
+public static BufferedImage convertRenderedImage(RenderedImage img) {
+    if (img instanceof BufferedImage) {
+        return (BufferedImage)img;  
+    }   
+    ColorModel cm = img.getColorModel();
+    int width = img.getWidth();
+    int height = img.getHeight();
+    WritableRaster raster = cm.createCompatibleWritableRaster(width, height);
+    boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
+    Hashtable properties = new Hashtable();
+    String[] keys = img.getPropertyNames();
+    if (keys!=null) {
+        for (int i = 0; i < keys.length; i++) {
+            properties.put(keys[i], img.getProperty(keys[i]));
+        }
+    }
+    BufferedImage result = new BufferedImage(cm, raster, isAlphaPremultiplied, properties);
+    img.copyData(raster);
+    return result;
+}
+
+    
     }
 
 
